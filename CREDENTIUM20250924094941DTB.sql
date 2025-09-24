@@ -156,3 +156,9 @@ insert into tb_banco_dados (id_autenticacao, hostname, databasename, portnumber,
 	1,
 	'localhost', 'db_credential', '5432', 'root', 'senha-segura'
 );
+
+-- Recuperar todas as credenciais de um determinado usuário
+select * 
+from tb_autenticacao autenticacao 
+join tb_credencial credencial on credencial.id_autenticacao = autenticacao.code
+where autenticacao.id_usuario = 1;
