@@ -118,7 +118,7 @@ insert into tb_categoria_pessoa (descricao, sigla) values ('Pessoa Física', 'PF
 insert into tb_categoria_pessoa (descricao, sigla) values ('Pessoa Jurídica', 'PJ');
 
 insert into tb_usuario (nome, usuario, senha) values (
-	'José Quintinno',
+	'Xibir Gipuogum Tuagan',
 	'email.principal.outlook.com.br', 
 	'senha-master'
 );
@@ -126,7 +126,7 @@ insert into tb_usuario (nome, usuario, senha) values (
 insert into tb_pessoa (id_categoria_pessoa, id_usuario, nome) values (
 	(select code from tb_categoria_pessoa where sigla = 'PF'),
 	(1),
-	'José Quintinno'
+	'Xibir Gipuogum Tuagan'
 );
 
 insert into tb_pessoa (id_categoria_pessoa, id_usuario, nome) values (
@@ -142,13 +142,13 @@ insert into tb_autenticacao (id_pessoa_instituicao, id_usuario) values (
 
 insert into tb_credencial (id_autenticacao, usuario, senha) values (
 	1,
-	'email@hotmail.com.br',
+	'xibir.tuagan@hotmail.com.br',
 	'senha-segura'
 );
 
 insert into tb_credencial (id_autenticacao, usuario, senha) values (
 	1,
-	'email@outlook.com.br',
+	'xibir.tuagan@outlook.com.br',
 	'senha-segura'
 );
 
