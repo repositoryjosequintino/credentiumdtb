@@ -9,6 +9,7 @@ create extension if not exists "uuid-ossp";
 
 drop table if exists tb_categoria_pessoa cascade;
 drop table if exists tb_pessoa cascade;
+drop table if exists tb_usuario cascade;
 drop table if exists tb_autenticacao cascade;
 drop table if exists tb_credencial cascade;
 drop table if exists tb_banco_dados cascade;
@@ -58,14 +59,14 @@ create table if not exists tb_autenticacao (
 	code serial not null,
 	code_public uuid not null default uuid_generate_v4(),
 	id_pessoa_instituicao bigint not null,
-	id_pessoa_responsavel bigint not null,
+	id_usuario bigint not null,
 	created_at timestamp not null default now(),
 	updated_at timestamp null,
 	deleted_at timestamp null,
 	active boolean default true,
 	constraint pk_autenticacao primary key (code),
 	constraint fk_pessoa_instituicao foreign key (id_pessoa_instituicao) references tb_pessoa (code) on delete cascade,
-	constraint fk_pessoa_responsavel foreign key (id_pessoa_responsavel) references tb_pessoa (code) on delete cascade
+	constraint fk_usuario foreign key (id_usuario) references tb_usuario (code) on delete cascade
 );
 
 create table if not exists tb_credencial (
@@ -104,6 +105,7 @@ create table if not exists tb_banco_dados (
 /*
 	select * from tb_categoria_pessoa;
 	select * from tb_pessoa;
+	select * from tb_usuario;
 	select * from tb_autenticacao;
 	select * from tb_credencial;
 	select * from tb_banco_dados;
@@ -117,25 +119,30 @@ insert into tb_pessoa (id_categoria_pessoa, nome) values (
 	'José Quintinno'
 );
 
+insert into tb_usuario (id_pessoa, usuario, senha) values (
+	(select code from tb_pessoa where nome = 'José Quintinno'),
+	'email.principal.outlook.com.br', 'senha-master'
+);
+
 insert into tb_pessoa (id_categoria_pessoa, nome) values (
 	(select code from tb_categoria_pessoa where sigla = 'PJ'),
 	'Microsoft'
 );
 
-insert into tb_autenticacao (id_pessoa_instituicao, id_pessoa_responsavel) values (
+insert into tb_autenticacao (id_pessoa_instituicao, id_usuario) values (
 	(select code from tb_pessoa where nome = 'Microsoft'),
-	(select code from tb_pessoa where nome = 'José Quintinno')
+	(1)
 );
 
 insert into tb_credencial (id_autenticacao, usuario, senha) values (
 	1,
-	'josequintino@hotmail.com.br',
+	'email@hotmail.com.br',
 	'senha-segura'
 );
 
 insert into tb_credencial (id_autenticacao, usuario, senha) values (
 	1,
-	'josequintino@outlook.com.br',
+	'email@outlook.com.br',
 	'senha-segura'
 );
 
