@@ -40,6 +40,20 @@ create table if not exists tb_pessoa (
 	constraint un_pessoa unique (nome)
 );
 
+create table if not exists tb_usuario (
+	code serial not null,
+	code_public uuid not null default uuid_generate_v4(),
+	id_pessoa bigint not null,
+	usuario varchar (255) not null,
+	senha varchar (255) not null,
+	created_at timestamp not null default now(),
+	updated_at timestamp null,
+	deleted_at timestamp null,
+	active boolean default true,
+	constraint pk_usuario primary key (code),
+	constraint un_usuario unique (id_pessoa, usuario)
+);
+
 create table if not exists tb_autenticacao (
 	code serial not null,
 	code_public uuid not null default uuid_generate_v4(),
